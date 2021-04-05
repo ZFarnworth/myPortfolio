@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "name": "Budget Tracker",
+        "image": "./images/budgetTracker.png",
+        "github": "https://github.com/ZFarnworth/budgetTracker",
+        "deploy": "https://budget-trackerzzz.herokuapp.com/"
+    },
+    {
+        "id": 2,
+        "name": "CMS Blog",
+        "image": "./images/techBlog.png",
+        "github": "https://github.com/ZFarnworth/Employee_CMS",
+        "deploy": "https://github.com/ZFarnworth/Employee_CMS/blob/master/README.md"
+    },
+    {
+        "id": 3,
+        "name": "Note Taker",
+        "image": "./images/noteTaker.png",
+        "github": "https://github.com/ZFarnworth/noteTaker",
+        "deploy": "https://notetakerzfarny.herokuapp.com/"
+    },
+    {
+        "id": 4,
+        "name": "Weather Dashboard",
+        "image": "./images/weatherDashboard.png",
+        "github": "https://github.com/ZFarnworth/Weather-Dashboard",
+        "deploy": "https://zfarnworth.github.io/Weather-Dashboard/"
+    },
+    {
+        "id": 5,
+        "name": "Work Day Scheduler",
+        "image": "./images/dayPlanner.png",
+        "github": "https://github.com/ZFarnworth/Day-Planner",
+        "deploy": "https://zfarnworth.github.io/Day-Planner/"
+    },
+    {
+        "id": 7,
+        "name": "Password Generator",
+        "image": "./images/passwordGenerator.png",
+        "github": "https://github.com/ZFarnworth/password_generator",
+        "deploy": "https://zfarnworth.github.io/password_generator"
+    }
+]
