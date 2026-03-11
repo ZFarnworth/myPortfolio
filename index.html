@@ -1,1 +1,833 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><link rel="icon" href="/myPortfolio/images/favicon.png"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="Web site created using create-react-app"/><link rel="apple-touch-icon" href="/myPortfolio/images/apple-touch-icon.png"/><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"><link rel="manifest" href="/myPortfolio/manifest.json"/><title>Zac Farnworth</title><link href="/myPortfolio/static/css/main.0b890749.chunk.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div><script>!function(l){function e(e){for(var r,t,n=e[0],o=e[1],u=e[2],f=0,i=[];f<n.length;f++)t=n[f],p[t]&&i.push(p[t][0]),p[t]=0;for(r in o)Object.prototype.hasOwnProperty.call(o,r)&&(l[r]=o[r]);for(s&&s(e);i.length;)i.shift()();return c.push.apply(c,u||[]),a()}function a(){for(var e,r=0;r<c.length;r++){for(var t=c[r],n=!0,o=1;o<t.length;o++){var u=t[o];0!==p[u]&&(n=!1)}n&&(c.splice(r--,1),e=f(f.s=t[0]))}return e}var t={},p={1:0},c=[];function f(e){if(t[e])return t[e].exports;var r=t[e]={i:e,l:!1,exports:{}};return l[e].call(r.exports,r,r.exports,f),r.l=!0,r.exports}f.m=l,f.c=t,f.d=function(e,r,t){f.o(e,r)||Object.defineProperty(e,r,{enumerable:!0,get:t})},f.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},f.t=function(r,e){if(1&e&&(r=f(r)),8&e)return r;if(4&e&&"object"==typeof r&&r&&r.__esModule)return r;var t=Object.create(null);if(f.r(t),Object.defineProperty(t,"default",{enumerable:!0,value:r}),2&e&&"string"!=typeof r)for(var n in r)f.d(t,n,function(e){return r[e]}.bind(null,n));return t},f.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return f.d(r,"a",r),r},f.o=function(e,r){return Object.prototype.hasOwnProperty.call(e,r)},f.p="/myPortfolio/";var r=window.webpackJsonp=window.webpackJsonp||[],n=r.push.bind(r);r.push=e,r=r.slice();for(var o=0;o<r.length;o++)e(r[o]);var s=n;a()}([])</script><script src="/myPortfolio/static/js/2.3b045380.chunk.js"></script><script src="/myPortfolio/static/js/main.bc8735f9.chunk.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zachary Farnworth — Implementations PM</title>
+  <meta name="description" content="Zachary Farnworth — Senior Implementations Project Manager with 8+ years leading enterprise B2B SaaS implementations end-to-end." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #09090b;
+      --surface:   #111116;
+      --border:    rgba(255,255,255,0.07);
+      --text:      #fafafa;
+      --muted:     #a1a1aa;
+      --accent:    #3b82f6;
+      --accent-dim: rgba(59,130,246,0.12);
+      --accent-glow: rgba(59,130,246,0.35);
+      --radius:    12px;
+      --max-w:     1060px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      transition: background 0.3s, border-color 0.3s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(9,9,11,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom-color: var(--border);
+    }
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      top: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(59,130,246,0.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 72px;
+    }
+    .hero-content { flex: 1; min-width: 0; }
+    .hero-photo {
+      flex-shrink: 0;
+      width: 320px;
+    }
+    .hero-photo img {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      display: block;
+      filter: grayscale(15%);
+    }
+    @media (max-width: 860px) {
+      .hero-inner { flex-direction: column-reverse; gap: 40px; padding-top: 100px; }
+      .hero-photo { width: 200px; }
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .hero h1 {
+      font-size: clamp(44px, 7vw, 80px);
+      font-weight: 800;
+      letter-spacing: -2.5px;
+      line-height: 1.05;
+      margin-bottom: 24px;
+      max-width: 800px;
+    }
+    .hero h1 .dim { color: var(--muted); }
+    .hero-sub {
+      font-size: clamp(17px, 2vw, 20px);
+      color: var(--muted);
+      max-width: 540px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      font-weight: 400;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      padding: 13px 26px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 13px 26px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      transition: color 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .btn-secondary:hover { color: var(--text); border-color: rgba(255,255,255,0.2); transform: translateY(-1px); }
+
+    /* ── SECTION BASE ── */
+    section {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 100px 24px;
+    }
+    .section-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 540px;
+      line-height: 1.65;
+      margin-bottom: 56px;
+    }
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 24px;
+    }
+
+    /* ── STATS ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 0;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: border-color 0.2s;
+    }
+    .stat-card:hover { border-color: rgba(59,130,246,0.35); }
+    .stat-num {
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-num span { color: var(--accent); }
+    .stat-label {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* ── EXPERIENCE ── */
+    .exp-list { display: flex; flex-direction: column; gap: 20px; }
+    .exp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 36px 36px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s;
+    }
+    .exp-card:hover { border-color: rgba(59,130,246,0.3); }
+    .exp-card.featured {
+      border-color: rgba(59,130,246,0.25);
+    }
+    .exp-card.featured::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    .exp-company {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .exp-dates {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500;
+      white-space: nowrap;
+      padding-top: 3px;
+    }
+    .exp-role {
+      font-size: 15px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .exp-bullets li {
+      font-size: 15px;
+      color: var(--muted);
+      padding-left: 18px;
+      position: relative;
+      line-height: 1.6;
+    }
+    .exp-bullets li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 12px;
+      top: 4px;
+    }
+    .exp-bullets li strong { color: var(--text); font-weight: 600; }
+    .exp-sub-role {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .skill-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+    .skill-group-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .skill-tag {
+      font-size: 13px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-weight: 500;
+    }
+
+    /* ── AI SECTION ── */
+    .ai-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 0;
+    }
+    .ai-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: border-color 0.2s;
+    }
+    .ai-card:hover { border-color: rgba(59,130,246,0.3); }
+    .ai-card-icon {
+      font-size: 22px;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .ai-card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .ai-card-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .ai-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .ai-tool {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 4px;
+      padding: 3px 8px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 768px) { .ai-grid { grid-template-columns: 1fr; } }
+
+    /* ── CONTACT ── */
+    .contact-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-wrap::before {
+      content: '';
+      position: absolute;
+      bottom: -60%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .contact-wrap h2 {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 14px;
+    }
+    .contact-wrap p {
+      color: var(--muted);
+      font-size: 17px;
+      margin-bottom: 36px;
+    }
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ── FADE IN ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .skills-grid { grid-template-columns: 1fr; }
+      .exp-card { padding: 24px; }
+      .contact-wrap { padding: 40px 24px; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .stat-num { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Zac Farnworth</a>
+      <ul class="nav-links">
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#ai">AI & Automation</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-eyebrow">Senior Implementations PM</div>
+        <h1>
+          Enterprise SaaS.<br />
+          <span class="dim">Implemented right.</span>
+        </h1>
+        <p class="hero-sub">
+          8+ years leading complex B2B SaaS implementations end-to-end —
+          from kickoff through full adoption. I turn ambiguous, high-stakes rollouts
+          into smooth, on-time go-lives.
+        </p>
+        <div class="hero-ctas">
+          <a href="#experience" class="btn-primary">
+            View Experience
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#contact" class="btn-secondary">Get in Touch</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img src="zac.jpg" alt="Zac Farnworth" />
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ── STATS ── -->
+  <section id="stats">
+    <div class="stats-grid">
+      <div class="stat-card fade-in">
+        <div class="stat-num">8<span>+</span></div>
+        <div class="stat-label">Years leading enterprise<br />SaaS implementations</div>
+      </div>
+      <div class="stat-card fade-in">
+        <div class="stat-num">40<span>–50</span></div>
+        <div class="stat-label">Simultaneous enterprise<br />projects managed</div>
+      </div>
+      <div class="stat-card fade-in">
+        <div class="stat-num">600<span>%+</span></div>
+        <div class="stat-label">Revenue growth driven<br />at Instructure</div>
+      </div>
+      <div class="stat-card fade-in">
+        <div class="stat-num">1.5<span>k</span></div>
+        <div class="stat-label">Manual hours eliminated<br />per year via automation</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ── EXPERIENCE ── -->
+  <section id="experience">
+    <div class="section-label">Experience</div>
+    <h2 class="section-title">Implementations That Deliver</h2>
+    <p class="section-desc">
+      I've led implementations at scale across equity management, edtech, and financial services —
+      always focused on reducing risk, aligning stakeholders, and hitting go-live on time.
+    </p>
+
+    <div class="exp-list">
+
+      <!-- Carta -->
+      <div class="exp-card featured fade-in">
+        <div class="exp-header">
+          <div class="exp-company">Carta</div>
+          <div class="exp-dates">May 2025 – Present · Sandy, UT</div>
+        </div>
+        <div class="exp-role">Senior Implementations Project Manager</div>
+        <ul class="exp-bullets">
+          <li>
+            Lead <strong>40–50 simultaneous enterprise B2B implementation projects</strong> end-to-end —
+            from kickoff through handoff — managing complex financial data and equity workflows for
+            private equity and financial services clients.
+          </li>
+          <li>
+            Design customized implementation plans with clear milestones and success metrics,
+            <strong>proactively identifying and resolving risks</strong> before they impact go-live.
+          </li>
+          <li>
+            Serve as primary point of contact and trusted advisor, communicating complex technical
+            concepts clearly to <strong>executive stakeholders including CFOs and CEOs</strong>.
+          </li>
+          <li>
+            Partner closely with Sales and cross-functional teams to scope implementation solutions,
+            ensuring smooth handoffs to post-implementation support.
+          </li>
+          <li>
+            Use <strong>AI daily to automate the implementation lifecycle</strong> — from auto-generating
+            kickoff agendas and status updates in Shortcut.ai, to building Python scripts with Claude
+            that parse customer data, flag blockers, and pre-populate project templates. What used to
+            take hours now takes minutes.
+          </li>
+          <li>
+            Built a <strong>Claude-powered workflow</strong> that drafts tailored implementation plans
+            from a customer intake form — eliminating repetitive document creation and freeing up time
+            for high-value customer work.
+          </li>
+        </ul>
+      </div>
+
+      <!-- Instructure -->
+      <div class="exp-card fade-in">
+        <div class="exp-header">
+          <div class="exp-company">Instructure</div>
+          <div class="exp-dates">May 2018 – Nov 2024 · Salt Lake City, UT</div>
+        </div>
+        <div class="exp-role">Technical Implementations Manager — Content Migrations (SaaS)</div>
+        <ul class="exp-bullets">
+          <li>
+            Led <strong>30–40 simultaneous enterprise customer implementation projects</strong>,
+            working cross-functionally with Sales, Rev-Ops, Engineering, and Support to align
+            solutions with client needs.
+          </li>
+          <li>
+            Drove a <strong>600%+ revenue increase</strong> in the services line — from $300K to over
+            $1.5M annually — by streamlining implementation operations and improving time-to-value.
+          </li>
+          <li>
+            Built process and technical improvements using <strong>APIs and scripting that eliminated
+            1,000–1,500 manual hours per year</strong>, improving scalability across the team.
+          </li>
+          <li>
+            Translated complex technical integrations for non-technical executive stakeholders,
+            building confidence throughout the implementation process.
+          </li>
+        </ul>
+
+        <div class="exp-sub-role">Software Engineer — Custom Development</div>
+        <ul class="exp-bullets">
+          <li>Built automated workflows to replace manual processes, saving 1,000–1,500 hours per year.</li>
+          <li>Provided technical guidance to resolve integration and workflow challenges across the team.</li>
+        </ul>
+
+        <div class="exp-sub-role">Canvas Customer Support</div>
+        <ul class="exp-bullets">
+          <li>Delivered technical support to higher education administrators with fast resolution and clear communication.</li>
+          <li>Maintained a <strong>perfect CSAT record for 12 consecutive months</strong>.</li>
+        </ul>
+      </div>
+
+      <!-- Crest Financial -->
+      <div class="exp-card fade-in">
+        <div class="exp-header">
+          <div class="exp-company">Crest Financial</div>
+          <div class="exp-dates">Jul 2015 – Jul 2016 · Draper, UT</div>
+        </div>
+        <div class="exp-role">Account Manager</div>
+        <ul class="exp-bullets">
+          <li>Managed a portfolio of <strong>100+ retail partners</strong>, supporting operations and identifying growth opportunities.</li>
+          <li>Maintained a <strong>98% client retention rate</strong> and increased financing volume by 15% via data-driven strategies.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ── SKILLS ── -->
+  <section id="skills">
+    <div class="section-label">Skills</div>
+    <h2 class="section-title">Tools of the Trade</h2>
+    <p class="section-desc">
+      Technical enough to build the automation, experienced enough to lead the room.
+    </p>
+
+    <div class="skills-grid">
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Implementation & PM</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Enterprise Implementations</span>
+          <span class="skill-tag">Stakeholder Management</span>
+          <span class="skill-tag">Cross-Functional Alignment</span>
+          <span class="skill-tag">Risk Mitigation</span>
+          <span class="skill-tag">Milestone Planning</span>
+          <span class="skill-tag">Go-Live Execution</span>
+          <span class="skill-tag">Playbook Development</span>
+        </div>
+      </div>
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Technical</div>
+        <div class="skill-tags">
+          <span class="skill-tag">APIs</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag">Postman</span>
+          <span class="skill-tag">Full Stack (UofU Bootcamp)</span>
+        </div>
+      </div>
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Tools & Platforms</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Salesforce</span>
+          <span class="skill-tag">Asana</span>
+          <span class="skill-tag">Jira</span>
+          <span class="skill-tag">Claude</span>
+          <span class="skill-tag">Gemini</span>
+          <span class="skill-tag">Google Sheets</span>
+          <span class="skill-tag">Excel</span>
+          <span class="skill-tag">Microsoft 365</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ── AI & AUTOMATION ── -->
+  <section id="ai">
+    <div class="section-label">AI & Automation</div>
+    <h2 class="section-title">Building Smarter, Not Just Harder</h2>
+    <p class="section-desc">
+      I don't just manage implementations — I engineer the workflows that make them faster.
+      AI is now a core part of how I operate, not a side skill.
+    </p>
+
+    <div class="ai-grid">
+      <div class="ai-card fade-in">
+        <span class="ai-card-icon">⚡</span>
+        <div class="ai-card-title">Automated Plan Generation</div>
+        <div class="ai-card-desc">
+          Built a Claude-powered workflow that ingests customer intake forms and auto-generates
+          fully tailored implementation plans — milestones, success metrics, and risk flags included.
+          What used to take 2–3 hours now takes under 5 minutes.
+        </div>
+        <div class="ai-tools">
+          <span class="ai-tool">Claude</span>
+          <span class="ai-tool">Python</span>
+        </div>
+      </div>
+      <div class="ai-card fade-in">
+        <span class="ai-card-icon">🔁</span>
+        <div class="ai-card-title">Status & Communication Automation</div>
+        <div class="ai-card-desc">
+          Automated repetitive project communication — weekly status summaries, stakeholder
+          updates, and kickoff agendas — using Shortcut.ai and prompt templates. Eliminated
+          hours of manual writing per week across 40–50 active projects.
+        </div>
+        <div class="ai-tools">
+          <span class="ai-tool">Shortcut.ai</span>
+          <span class="ai-tool">Claude</span>
+        </div>
+      </div>
+      <div class="ai-card fade-in">
+        <span class="ai-card-icon">🛠️</span>
+        <div class="ai-card-title">Data & Workflow Scripting</div>
+        <div class="ai-card-desc">
+          Write Python scripts (with Claude as a coding partner) to parse customer data files,
+          validate formats, flag anomalies, and pre-populate project templates — removing
+          manual data wrangling from the implementation intake process entirely.
+        </div>
+        <div class="ai-tools">
+          <span class="ai-tool">Python</span>
+          <span class="ai-tool">Claude</span>
+          <span class="ai-tool">APIs</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ── CONTACT ── -->
+  <section id="contact" style="padding-bottom: 100px;">
+    <div class="contact-wrap fade-in">
+      <div class="section-label" style="text-align:center; margin-bottom: 16px;">Contact</div>
+      <h2>Let's work together.</h2>
+      <p>Open to new opportunities in enterprise implementations and SaaS.</p>
+      <div class="contact-links">
+        <a href="mailto:zacharyfarnworth@gmail.com" class="btn-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          zacharyfarnworth@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/zachary-farnworth-72453315a" target="_blank" rel="noopener" class="btn-secondary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <p>© 2026 Zachary Farnworth &nbsp;·&nbsp; Lehi, UT &nbsp;·&nbsp; 801-917-9771</p>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // Intersection observer for fade-ins
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
