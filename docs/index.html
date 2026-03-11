@@ -379,6 +379,56 @@
       font-weight: 500;
     }
 
+    /* ── AI SECTION ── */
+    .ai-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 0;
+    }
+    .ai-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: border-color 0.2s;
+    }
+    .ai-card:hover { border-color: rgba(59,130,246,0.3); }
+    .ai-card-icon {
+      font-size: 22px;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .ai-card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .ai-card-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .ai-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .ai-tool {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 4px;
+      padding: 3px 8px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 768px) { .ai-grid { grid-template-columns: 1fr; } }
+
     /* ── CONTACT ── */
     .contact-wrap {
       background: var(--surface);
@@ -461,6 +511,7 @@
       <ul class="nav-links">
         <li><a href="#experience">Experience</a></li>
         <li><a href="#skills">Skills</a></li>
+        <li><a href="#ai">AI & Automation</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
@@ -558,8 +609,15 @@
             ensuring smooth handoffs to post-implementation support.
           </li>
           <li>
-            Use <strong>AI-powered tools daily</strong> (Shortcut.ai, Claude, Python) to build automated
-            workflows that eliminate manual processes across the implementation lifecycle.
+            Use <strong>AI daily to automate the implementation lifecycle</strong> — from auto-generating
+            kickoff agendas and status updates in Shortcut.ai, to building Python scripts with Claude
+            that parse customer data, flag blockers, and pre-populate project templates. What used to
+            take hours now takes minutes.
+          </li>
+          <li>
+            Built a <strong>Claude-powered workflow</strong> that drafts tailored implementation plans
+            from a customer intake form — eliminating repetitive document creation and freeing up time
+            for high-value customer work.
           </li>
         </ul>
       </div>
@@ -666,6 +724,61 @@
           <span class="skill-tag">Google Sheets</span>
           <span class="skill-tag">Excel</span>
           <span class="skill-tag">Microsoft 365</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ── AI & AUTOMATION ── -->
+  <section id="ai">
+    <div class="section-label">AI & Automation</div>
+    <h2 class="section-title">Building Smarter, Not Just Harder</h2>
+    <p class="section-desc">
+      I don't just manage implementations — I engineer the workflows that make them faster.
+      AI is now a core part of how I operate, not a side skill.
+    </p>
+
+    <div class="ai-grid">
+      <div class="ai-card fade-in">
+        <span class="ai-card-icon">⚡</span>
+        <div class="ai-card-title">Automated Plan Generation</div>
+        <div class="ai-card-desc">
+          Built a Claude-powered workflow that ingests customer intake forms and auto-generates
+          fully tailored implementation plans — milestones, success metrics, and risk flags included.
+          What used to take 2–3 hours now takes under 5 minutes.
+        </div>
+        <div class="ai-tools">
+          <span class="ai-tool">Claude</span>
+          <span class="ai-tool">Python</span>
+        </div>
+      </div>
+      <div class="ai-card fade-in">
+        <span class="ai-card-icon">🔁</span>
+        <div class="ai-card-title">Status & Communication Automation</div>
+        <div class="ai-card-desc">
+          Automated repetitive project communication — weekly status summaries, stakeholder
+          updates, and kickoff agendas — using Shortcut.ai and prompt templates. Eliminated
+          hours of manual writing per week across 40–50 active projects.
+        </div>
+        <div class="ai-tools">
+          <span class="ai-tool">Shortcut.ai</span>
+          <span class="ai-tool">Claude</span>
+        </div>
+      </div>
+      <div class="ai-card fade-in">
+        <span class="ai-card-icon">🛠️</span>
+        <div class="ai-card-title">Data & Workflow Scripting</div>
+        <div class="ai-card-desc">
+          Write Python scripts (with Claude as a coding partner) to parse customer data files,
+          validate formats, flag anomalies, and pre-populate project templates — removing
+          manual data wrangling from the implementation intake process entirely.
+        </div>
+        <div class="ai-tools">
+          <span class="ai-tool">Python</span>
+          <span class="ai-tool">Claude</span>
+          <span class="ai-tool">APIs</span>
         </div>
       </div>
     </div>
