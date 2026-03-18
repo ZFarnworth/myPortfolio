@@ -144,10 +144,30 @@
       width: 64px; height: 64px;
       border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 34px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.4);
+      font-size: 30px;
+      box-shadow:
+        0 6px 18px rgba(0,0,0,0.5),
+        0 2px 4px rgba(0,0,0,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.5),
+        inset 0 -2px 4px rgba(0,0,0,0.15);
       transition: filter 0.15s, transform 0.15s;
       position: relative;
+      overflow: hidden;
+    }
+    /* Aqua gloss — the classic Mac OS X "lickable" shine */
+    .d-icon-img::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 52%;
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.55) 0%,
+        rgba(255,255,255,0.18) 70%,
+        rgba(255,255,255,0.02) 100%
+      );
+      border-radius: 14px 14px 60% 60% / 14px 14px 30% 30%;
+      pointer-events: none;
     }
     .d-icon:active .d-icon-img { transform: scale(0.93); }
     .d-icon-label {
@@ -160,12 +180,25 @@
       background: #1a7ae0; border-radius: 3px;
     }
 
-    /* Icon colors */
-    .icon-blue   { background: linear-gradient(145deg, #5ba8f5 0%, #1a6ae0 50%, #0d4fb0 100%); }
-    .icon-green  { background: linear-gradient(145deg, #5dd45d 0%, #28a028 50%, #1a7a1a 100%); }
-    .icon-purple { background: linear-gradient(145deg, #c07af5 0%, #8040d0 50%, #5a20a0 100%); }
-    .icon-orange { background: linear-gradient(145deg, #f5a855 0%, #e07820 50%, #b05010 100%); }
-    .icon-red    { background: linear-gradient(145deg, #f57070 0%, #d03030 50%, #a01010 100%); }
+    /* Icon colors — Mac OS X Aqua palette */
+    .icon-blue {
+      background: linear-gradient(160deg, #a8d8f8 0%, #4da8f0 25%, #1874d4 55%, #0a4a9a 100%);
+    }
+    .icon-green {
+      background: linear-gradient(160deg, #90ee90 0%, #3ccc3c 25%, #18a018 55%, #0a6a0a 100%);
+    }
+    .icon-purple {
+      background: linear-gradient(160deg, #d8a8f8 0%, #a050e8 25%, #7020c0 55%, #440088 100%);
+    }
+    .icon-orange {
+      background: linear-gradient(160deg, #ffd090 0%, #f0a030 25%, #d06800 55%, #904000 100%);
+    }
+    .icon-red {
+      background: linear-gradient(160deg, #f8a0a0 0%, #e84040 25%, #c01010 55%, #800000 100%);
+    }
+    .icon-gray {
+      background: linear-gradient(160deg, #e0e0e0 0%, #b0b0b0 25%, #808080 55%, #505050 100%);
+    }
 
     /* ── WINDOWS ── */
     .win {
@@ -405,11 +438,31 @@
       width: 52px; height: 52px;
       border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 28px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4);
+      font-size: 26px;
+      box-shadow:
+        0 5px 16px rgba(0,0,0,0.5),
+        0 2px 4px rgba(0,0,0,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.5),
+        inset 0 -2px 4px rgba(0,0,0,0.15);
       transition: filter 0.15s;
+      position: relative;
+      overflow: hidden;
     }
-    .dock-item:hover .dock-icon { filter: brightness(1.1); }
+    .dock-icon::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 52%;
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.55) 0%,
+        rgba(255,255,255,0.18) 70%,
+        rgba(255,255,255,0.02) 100%
+      );
+      border-radius: 12px 12px 60% 60% / 12px 12px 30% 30%;
+      pointer-events: none;
+    }
+    .dock-item:hover .dock-icon { filter: brightness(1.12); }
     .dock-label {
       position: absolute; bottom: 62px;
       background: rgba(30,30,30,0.82);
@@ -775,7 +828,7 @@
     </div>
     <div class="dock-sep"></div>
     <div class="dock-item">
-      <div class="dock-icon" style="background:linear-gradient(145deg,#aaa,#777);">🗑️</div>
+      <div class="dock-icon icon-gray">🗑️</div>
       <div class="dock-label">Trash</div>
       <div class="dock-dot hidden"></div>
     </div>
