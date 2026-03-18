@@ -3,831 +3,921 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zachary Farnworth — Implementations PM</title>
-  <meta name="description" content="Zachary Farnworth — Senior Implementations Project Manager with 8+ years leading enterprise B2B SaaS implementations end-to-end." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <title>Zac Farnworth</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+    body { overflow: hidden; height: 100vh; width: 100vw; font-family: 'Lucida Grande', 'Geneva', 'Helvetica Neue', Arial, sans-serif; }
 
-    :root {
-      --bg:        #09090b;
-      --surface:   #111116;
-      --border:    rgba(255,255,255,0.07);
-      --text:      #fafafa;
-      --muted:     #a1a1aa;
-      --accent:    #3b82f6;
-      --accent-dim: rgba(59,130,246,0.12);
-      --accent-glow: rgba(59,130,246,0.35);
-      --radius:    12px;
-      --max-w:     1060px;
+    /* ── BOOT SCREEN ── */
+    #boot {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #000;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 40px;
+      transition: opacity 0.8s ease;
     }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
+    #boot.fade-out { opacity: 0; pointer-events: none; }
+    .boot-apple {
+      font-size: 80px; line-height: 1;
+      filter: brightness(0) invert(1);
+      opacity: 0.9;
     }
-
-    /* ── SCROLLBAR ── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      transition: background 0.3s, border-color 0.3s;
-      border-bottom: 1px solid transparent;
-    }
-    nav.scrolled {
-      background: rgba(9,9,11,0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom-color: var(--border);
-    }
-    .nav-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 24px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      font-weight: 700;
-      font-size: 18px;
-      letter-spacing: -0.5px;
-      color: var(--text);
-      text-decoration: none;
-    }
-    .nav-logo span { color: var(--accent); }
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text); }
-
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
+    .boot-bar-wrap {
+      width: 180px; height: 12px;
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
       overflow: hidden;
     }
-    .hero-glow {
+    .boot-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #5b9bd5, #a8d0f0);
+      border-radius: 6px;
+      transition: width 0.1s linear;
+    }
+
+    /* ── LOGIN SCREEN ── */
+    #login {
+      position: fixed; inset: 0; z-index: 9998;
+      background:
+        radial-gradient(ellipse at 40% 60%, rgba(30,90,180,0.5) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 20%, rgba(10,50,120,0.6) 0%, transparent 45%),
+        linear-gradient(160deg, #0d1f3c 0%, #0a2a5a 40%, #06183a 100%);
+      display: none;
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 16px;
+      transition: opacity 0.6s ease;
+    }
+    #login.visible { display: flex; }
+    #login.fade-out { opacity: 0; pointer-events: none; }
+    .login-card {
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      cursor: pointer;
+    }
+    .login-avatar {
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.5);
+      object-fit: cover;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    .login-name {
+      color: #fff;
+      font-size: 17px;
+      font-weight: 500;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    }
+    .login-hint {
+      color: rgba(255,255,255,0.55);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    .login-btn {
+      margin-top: 8px;
+      padding: 6px 22px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.25), rgba(255,255,255,0.1));
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 13px;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: background 0.2s;
+    }
+    .login-btn:hover { background: linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0.2)); }
+
+    /* ── DESKTOP ── */
+    #desktop {
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 80%, rgba(20,70,160,0.6) 0%, transparent 45%),
+        radial-gradient(ellipse at 75% 15%, rgba(10,50,130,0.5) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 50%, rgba(5,30,80,0.4) 0%, transparent 60%),
+        linear-gradient(165deg, #0a1628 0%, #112244 35%, #0b2040 65%, #050f20 100%);
+      display: none;
+      padding-top: 22px;
+    }
+    #desktop.visible { display: block; }
+
+    /* ── MENU BAR ── */
+    #menubar {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 22px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.92), rgba(230,230,230,0.90));
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.2);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 8px;
+      z-index: 1000;
+      font-size: 13px;
+    }
+    .menu-left { display: flex; align-items: center; gap: 2px; }
+    .menu-item {
+      padding: 1px 8px;
+      border-radius: 3px;
+      color: #1a1a1a;
+      cursor: default;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .menu-item:hover { background: #1a7ae0; color: #fff; }
+    .menu-item.app-name { font-weight: 700; }
+    .menu-apple { font-size: 15px; padding: 0 10px; cursor: default; }
+    .menu-apple:hover { background: #1a7ae0; color: #fff; border-radius: 3px; }
+    .menu-right { display: flex; align-items: center; gap: 12px; color: #1a1a1a; font-size: 12px; }
+    .menu-right span { cursor: default; }
+    #menubar-clock { font-size: 12px; }
+
+    /* ── DESKTOP ICONS ── */
+    .desktop-icons {
       position: absolute;
-      top: -20%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 800px;
-      height: 800px;
-      background: radial-gradient(circle, rgba(59,130,246,0.14) 0%, transparent 70%);
+      right: 12px; top: 30px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .d-icon {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      cursor: pointer; width: 76px;
+    }
+    .d-icon:hover .d-icon-img { filter: brightness(1.15); }
+    .d-icon-img {
+      width: 64px; height: 64px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 34px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.4);
+      transition: filter 0.15s, transform 0.15s;
+      position: relative;
+    }
+    .d-icon:active .d-icon-img { transform: scale(0.93); }
+    .d-icon-label {
+      font-size: 11px; color: #fff;
+      text-align: center; line-height: 1.3;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 0 6px rgba(0,0,0,0.7);
+      padding: 1px 4px;
+    }
+    .d-icon.selected .d-icon-label {
+      background: #1a7ae0; border-radius: 3px;
+    }
+
+    /* Icon colors */
+    .icon-blue   { background: linear-gradient(145deg, #5ba8f5 0%, #1a6ae0 50%, #0d4fb0 100%); }
+    .icon-green  { background: linear-gradient(145deg, #5dd45d 0%, #28a028 50%, #1a7a1a 100%); }
+    .icon-purple { background: linear-gradient(145deg, #c07af5 0%, #8040d0 50%, #5a20a0 100%); }
+    .icon-orange { background: linear-gradient(145deg, #f5a855 0%, #e07820 50%, #b05010 100%); }
+    .icon-red    { background: linear-gradient(145deg, #f57070 0%, #d03030 50%, #a01010 100%); }
+
+    /* ── WINDOWS ── */
+    .win {
+      position: absolute;
+      min-width: 420px;
+      background: #ececec;
+      border-radius: 8px;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.55),
+        0 0 0 1px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.7);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      resize: both;
+    }
+    .win.open { display: flex; }
+    .win.minimized { display: none; }
+
+    /* Title bar — pinstripe */
+    .win-titlebar {
+      height: 22px;
+      background: linear-gradient(
+        to bottom,
+        #e4e4e4 0%, #d6d6d6 45%,
+        #c8c8c8 50%, #d0d0d0 55%, #d8d8d8 100%
+      );
+      border-bottom: 1px solid #a0a0a0;
+      display: flex; align-items: center;
+      padding: 0 8px;
+      flex-shrink: 0;
+      cursor: grab;
+      position: relative;
+    }
+    .win-titlebar:active { cursor: grabbing; }
+    .win-inactive .win-titlebar {
+      background: linear-gradient(to bottom, #f0f0f0, #e4e4e4);
+    }
+
+    /* Traffic lights */
+    .win-controls { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+    .win-btn {
+      width: 12px; height: 12px; border-radius: 50%;
+      border: none; cursor: pointer;
+      position: relative; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .win-btn::after {
+      content: '';
+      font-size: 9px; color: rgba(0,0,0,0.4);
+      font-weight: 900; line-height: 1;
+      opacity: 0; position: absolute;
+    }
+    .win-controls:hover .win-btn::after { opacity: 1; }
+    .win-close { background: radial-gradient(circle at 40% 35%, #ff8880, #ff5f57); box-shadow: inset 0 -1px 0 rgba(0,0,0,0.2); }
+    .win-close::after { content: '✕'; font-size: 7px; }
+    .win-minimize { background: radial-gradient(circle at 40% 35%, #ffd080, #febc2e); box-shadow: inset 0 -1px 0 rgba(0,0,0,0.2); }
+    .win-minimize::after { content: '−'; font-size: 9px; margin-top: -1px; }
+    .win-zoom { background: radial-gradient(circle at 40% 35%, #60e060, #28c840); box-shadow: inset 0 -1px 0 rgba(0,0,0,0.2); }
+    .win-zoom::after { content: '+'; font-size: 8px; }
+    .win-inactive .win-close    { background: #d0d0d0; }
+    .win-inactive .win-minimize { background: #d0d0d0; }
+    .win-inactive .win-zoom     { background: #d0d0d0; }
+
+    .win-title {
+      position: absolute; left: 0; right: 0;
+      text-align: center;
+      font-size: 12px; font-weight: 700;
+      color: #2a2a2a;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.7);
       pointer-events: none;
     }
-    .hero-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 120px 24px 80px;
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      gap: 72px;
-    }
-    .hero-content { flex: 1; min-width: 0; }
-    .hero-photo {
+    .win-inactive .win-title { color: #888; }
+
+    /* Toolbar (finder-style) */
+    .win-toolbar {
+      background: linear-gradient(to bottom, #d8d8d8, #c8c8c8);
+      border-bottom: 1px solid #aaa;
+      padding: 4px 10px;
+      font-size: 11px;
+      color: #555;
+      display: flex; align-items: center; gap: 8px;
       flex-shrink: 0;
-      width: 320px;
     }
-    .hero-photo img {
-      width: 100%;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      display: block;
-      filter: grayscale(15%);
-    }
-    @media (max-width: 860px) {
-      .hero-inner { flex-direction: column-reverse; gap: 40px; padding-top: 100px; }
-      .hero-photo { width: 200px; }
-    }
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--accent);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-    }
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 24px;
-      height: 1px;
-      background: var(--accent);
-    }
-    .hero h1 {
-      font-size: clamp(44px, 7vw, 80px);
-      font-weight: 800;
-      letter-spacing: -2.5px;
-      line-height: 1.05;
-      margin-bottom: 24px;
-      max-width: 800px;
-    }
-    .hero h1 .dim { color: var(--muted); }
-    .hero-sub {
-      font-size: clamp(17px, 2vw, 20px);
-      color: var(--muted);
-      max-width: 540px;
-      line-height: 1.6;
-      margin-bottom: 40px;
-      font-weight: 400;
-    }
-    .hero-ctas {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--accent);
-      color: #fff;
-      text-decoration: none;
-      padding: 13px 26px;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 600;
-      transition: opacity 0.2s, transform 0.2s;
-    }
-    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: transparent;
-      color: var(--muted);
-      text-decoration: none;
-      padding: 13px 26px;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: 500;
-      border: 1px solid var(--border);
-      transition: color 0.2s, border-color 0.2s, transform 0.2s;
-    }
-    .btn-secondary:hover { color: var(--text); border-color: rgba(255,255,255,0.2); transform: translateY(-1px); }
+    .toolbar-sep { width: 1px; height: 14px; background: #aaa; margin: 0 4px; }
 
-    /* ── SECTION BASE ── */
-    section {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 100px 24px;
+    /* Content */
+    .win-body {
+      overflow-y: auto;
+      flex: 1;
+      background: #fff;
+      user-select: text;
+      min-height: 0;
     }
-    .section-label {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
+    .win-body::-webkit-scrollbar { width: 15px; }
+    .win-body::-webkit-scrollbar-track {
+      background: linear-gradient(to right, #d0d0d0, #e0e0e0);
+      border-left: 1px solid #b0b0b0;
     }
-    .section-title {
-      font-size: clamp(28px, 4vw, 40px);
-      font-weight: 700;
-      letter-spacing: -1px;
-      line-height: 1.15;
-      margin-bottom: 16px;
-    }
-    .section-desc {
-      color: var(--muted);
-      font-size: 17px;
-      max-width: 540px;
-      line-height: 1.65;
-      margin-bottom: 56px;
-    }
-    .divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 0 24px;
+    .win-body::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, #b0b0b0, #909090);
+      border-radius: 7px;
+      border: 2px solid #c0c0c0;
     }
 
-    /* ── STATS ── */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 0;
-    }
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px 24px;
-      transition: border-color 0.2s;
-    }
-    .stat-card:hover { border-color: rgba(59,130,246,0.35); }
-    .stat-num {
-      font-size: 40px;
-      font-weight: 800;
-      letter-spacing: -2px;
-      color: var(--text);
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-    .stat-num span { color: var(--accent); }
-    .stat-label {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 500;
-      line-height: 1.4;
-    }
+    /* ── WINDOW CONTENT STYLES ── */
+    .win-content { padding: 20px; font-size: 13px; line-height: 1.6; color: #1a1a1a; }
 
-    /* ── EXPERIENCE ── */
-    .exp-list { display: flex; flex-direction: column; gap: 20px; }
-    .exp-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 36px 36px 36px 36px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.25s;
-    }
-    .exp-card:hover { border-color: rgba(59,130,246,0.3); }
-    .exp-card.featured {
-      border-color: rgba(59,130,246,0.25);
-    }
-    .exp-card.featured::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    }
-    .exp-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 16px;
-      margin-bottom: 6px;
-      flex-wrap: wrap;
-    }
-    .exp-company {
-      font-size: 19px;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .exp-dates {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 500;
-      white-space: nowrap;
-      padding-top: 3px;
-    }
-    .exp-role {
-      font-size: 15px;
-      color: var(--accent);
-      font-weight: 500;
+    /* About window */
+    .about-header {
+      display: flex; gap: 20px; align-items: flex-start;
       margin-bottom: 20px;
     }
-    .exp-bullets {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .about-photo {
+      width: 100px; height: 100px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid #c0c0c0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
-    .exp-bullets li {
-      font-size: 15px;
-      color: var(--muted);
-      padding-left: 18px;
-      position: relative;
-      line-height: 1.6;
+    .about-info h2 { font-size: 18px; font-weight: 700; margin-bottom: 2px; }
+    .about-info .about-title { font-size: 12px; color: #888; margin-bottom: 8px; }
+    .about-info p { font-size: 12px; color: #444; line-height: 1.55; }
+    .about-stats {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 10px; margin-top: 16px;
     }
-    .exp-bullets li::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-      font-size: 12px;
-      top: 4px;
-    }
-    .exp-bullets li strong { color: var(--text); font-weight: 600; }
-    .exp-sub-role {
-      font-size: 14px;
-      color: var(--muted);
-      font-weight: 500;
-      margin-top: 20px;
-      margin-bottom: 10px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-    }
-
-    /* ── SKILLS ── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-    .skill-group {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-    }
-    .skill-group-title {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 14px;
-    }
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .skill-tag {
-      font-size: 13px;
-      color: var(--muted);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
+    .about-stat {
+      background: linear-gradient(to bottom, #f5f5f5, #ebebeb);
+      border: 1px solid #d0d0d0;
       border-radius: 6px;
-      padding: 4px 10px;
-      font-weight: 500;
+      padding: 10px 12px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+    .about-stat-num { font-size: 22px; font-weight: 700; color: #1a6ae0; line-height: 1; }
+    .about-stat-label { font-size: 10px; color: #666; margin-top: 2px; }
+    .win-divider { border: none; border-top: 1px solid #d8d8d8; margin: 16px 0; }
+
+    /* Experience window */
+    .exp-entry { margin-bottom: 18px; }
+    .exp-entry:last-child { margin-bottom: 0; }
+    .exp-company-bar {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 2px;
+    }
+    .exp-company-name { font-size: 14px; font-weight: 700; }
+    .exp-company-date { font-size: 11px; color: #888; }
+    .exp-role-title { font-size: 12px; color: #1a6ae0; font-weight: 600; margin-bottom: 6px; }
+    .exp-bullets { padding-left: 14px; }
+    .exp-bullets li { font-size: 12px; color: #444; margin-bottom: 3px; line-height: 1.5; }
+    .exp-bullets li b { color: #1a1a1a; }
+
+    /* AI window */
+    .ai-card-mac {
+      background: linear-gradient(to bottom, #f8f8f8, #efefef);
+      border: 1px solid #d0d0d0;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+    .ai-card-mac:last-child { margin-bottom: 0; }
+    .ai-card-mac h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+    .ai-card-mac p { font-size: 12px; color: #444; line-height: 1.55; }
+    .ai-tags-mac { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .ai-tag-mac {
+      font-size: 10px; font-weight: 700;
+      background: linear-gradient(to bottom, #4a9af0, #1a6ae0);
+      color: #fff;
+      border-radius: 10px;
+      padding: 2px 8px;
+      letter-spacing: 0.03em;
     }
 
-    /* ── AI SECTION ── */
-    .ai-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 0;
-    }
-    .ai-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px 24px;
-      transition: border-color 0.2s;
-    }
-    .ai-card:hover { border-color: rgba(59,130,246,0.3); }
-    .ai-card-icon {
-      font-size: 22px;
-      margin-bottom: 14px;
-      display: block;
-    }
-    .ai-card-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-    .ai-card-desc {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-    .ai-tools {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
-    }
-    .ai-tool {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--accent);
-      background: var(--accent-dim);
-      border: 1px solid rgba(59,130,246,0.2);
-      border-radius: 4px;
-      padding: 3px 8px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-    @media (max-width: 768px) { .ai-grid { grid-template-columns: 1fr; } }
+    /* Contact window */
+    .contact-field { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .contact-field-icon { font-size: 22px; width: 36px; text-align: center; }
+    .contact-field-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.06em; }
+    .contact-field-value { font-size: 13px; font-weight: 600; color: #1a1a1a; }
+    .contact-field-value a { color: #1a6ae0; text-decoration: none; }
+    .contact-field-value a:hover { text-decoration: underline; }
 
-    /* ── CONTACT ── */
-    .contact-wrap {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 64px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+    /* ── SIDEBAR (finder-style) ── */
+    .win-with-sidebar { display: flex; flex: 1; min-height: 0; }
+    .win-sidebar {
+      width: 130px; flex-shrink: 0;
+      background: linear-gradient(to bottom, #d8d8d8, #c5c5c5);
+      border-right: 1px solid #a8a8a8;
+      padding: 8px 0;
+      overflow-y: auto;
     }
-    .contact-wrap::before {
-      content: '';
-      position: absolute;
-      bottom: -60%;
-      left: 50%;
+    .sidebar-section { padding: 0 0 8px 0; }
+    .sidebar-heading {
+      font-size: 10px; font-weight: 700; color: #666;
+      padding: 0 10px 4px;
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .sidebar-item {
+      display: flex; align-items: center; gap: 6px;
+      padding: 2px 10px;
+      font-size: 12px; color: #1a1a1a;
+      cursor: pointer; border-radius: 3px; margin: 0 4px;
+    }
+    .sidebar-item:hover { background: #1a7ae0; color: #fff; }
+    .sidebar-item span { font-size: 14px; }
+
+    /* ── DOCK ── */
+    #dock {
+      position: fixed; bottom: 0; left: 50%;
       transform: translateX(-50%);
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+      display: flex; align-items: flex-end;
+      gap: 6px;
+      padding: 6px 16px 6px;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-bottom: none;
+      border-radius: 18px 18px 0 0;
+      box-shadow: 0 -2px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.5);
+      z-index: 500;
+    }
+    .dock-sep {
+      width: 1px; height: 48px;
+      background: rgba(255,255,255,0.35);
+      align-self: flex-end; margin: 0 4px;
+    }
+    .dock-item {
+      display: flex; flex-direction: column; align-items: center;
+      cursor: pointer; position: relative;
+      transition: transform 0.12s ease;
+    }
+    .dock-item:hover { transform: translateY(-10px); }
+    .dock-item:hover .dock-label { opacity: 1; transform: translateY(0); }
+    .dock-icon {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.4);
+      transition: filter 0.15s;
+    }
+    .dock-item:hover .dock-icon { filter: brightness(1.1); }
+    .dock-label {
+      position: absolute; bottom: 62px;
+      background: rgba(30,30,30,0.82);
+      color: #fff;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 5px;
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.15s, transform 0.15s;
       pointer-events: none;
     }
-    .contact-wrap h2 {
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 700;
-      letter-spacing: -1px;
-      margin-bottom: 14px;
+    .dock-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: rgba(255,255,255,0.7);
+      margin-top: 3px;
     }
-    .contact-wrap p {
-      color: var(--muted);
-      font-size: 17px;
-      margin-bottom: 36px;
-    }
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
+    .dock-dot.hidden { visibility: hidden; }
 
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 24px;
+    /* ── MOBILE MESSAGE ── */
+    #mobile-msg {
+      display: none;
+      position: fixed; inset: 0; z-index: 99999;
+      background: #000;
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 16px; padding: 32px;
       text-align: center;
-      color: var(--muted);
-      font-size: 13px;
     }
-
-    /* ── FADE IN ── */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .skills-grid { grid-template-columns: 1fr; }
-      .exp-card { padding: 24px; }
-      .contact-wrap { padding: 40px 24px; }
-      .nav-links { display: none; }
-    }
-    @media (max-width: 480px) {
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-      .stat-num { font-size: 32px; }
-    }
+    #mobile-msg .apple-big { font-size: 64px; }
+    #mobile-msg p { color: rgba(255,255,255,0.7); font-size: 15px; line-height: 1.6; }
+    #mobile-msg h2 { color: #fff; font-size: 22px; }
+    @media (max-width: 700px) { #mobile-msg { display: flex; } }
   </style>
 </head>
 <body>
 
-  <!-- ── NAV ── -->
-  <nav id="navbar">
-    <div class="nav-inner">
-      <a href="#" class="nav-logo">Zac Farnworth</a>
-      <ul class="nav-links">
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#ai">AI & Automation</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
+<!-- ── MOBILE FALLBACK ── -->
+<div id="mobile-msg">
+  <div class="apple-big"></div>
+  <h2>Best experienced on desktop</h2>
+  <p>This portfolio is a Mac OS X interactive experience.<br />Open it on a laptop or desktop for the full effect.</p>
+</div>
 
-  <!-- ── HERO ── -->
-  <div class="hero">
-    <div class="hero-glow"></div>
-    <div class="hero-inner">
-      <div class="hero-content">
-        <div class="hero-eyebrow">Senior Implementations PM</div>
-        <h1>
-          Enterprise SaaS.<br />
-          <span class="dim">Implemented right.</span>
-        </h1>
-        <p class="hero-sub">
-          8+ years leading complex B2B SaaS implementations end-to-end —
-          from kickoff through full adoption. I turn ambiguous, high-stakes rollouts
-          into smooth, on-time go-lives.
-        </p>
-        <div class="hero-ctas">
-          <a href="#experience" class="btn-primary">
-            View Experience
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="#contact" class="btn-secondary">Get in Touch</a>
+<!-- ── BOOT SCREEN ── -->
+<div id="boot">
+  <div class="boot-apple"></div>
+  <div class="boot-bar-wrap">
+    <div class="boot-bar-fill" id="boot-bar"></div>
+  </div>
+</div>
+
+<!-- ── LOGIN SCREEN ── -->
+<div id="login">
+  <div class="login-card" id="login-card">
+    <img src="zac.jpg" alt="Zac Farnworth" class="login-avatar" />
+    <div class="login-name">Zac Farnworth</div>
+    <div class="login-hint">Click to log in</div>
+    <div class="login-btn">Log In</div>
+  </div>
+</div>
+
+<!-- ── DESKTOP ── -->
+<div id="desktop">
+
+  <!-- MENU BAR -->
+  <div id="menubar">
+    <div class="menu-left">
+      <span class="menu-apple"></span>
+      <span class="menu-item app-name">Zac Farnworth</span>
+      <span class="menu-item">File</span>
+      <span class="menu-item">View</span>
+      <span class="menu-item">Go</span>
+      <span class="menu-item">Help</span>
+    </div>
+    <div class="menu-right">
+      <span>🔋</span>
+      <span>📶</span>
+      <span id="menubar-clock"></span>
+    </div>
+  </div>
+
+  <!-- DESKTOP ICONS -->
+  <div class="desktop-icons">
+    <div class="d-icon" onclick="openWin('win-about')">
+      <div class="d-icon-img icon-blue">🧑‍💼</div>
+      <span class="d-icon-label">About Zac</span>
+    </div>
+    <div class="d-icon" onclick="openWin('win-exp')">
+      <div class="d-icon-img icon-orange">📋</div>
+      <span class="d-icon-label">Implementations</span>
+    </div>
+    <div class="d-icon" onclick="openWin('win-ai')">
+      <div class="d-icon-img icon-purple">🤖</div>
+      <span class="d-icon-label">AI Lab</span>
+    </div>
+    <div class="d-icon" onclick="openWin('win-contact')">
+      <div class="d-icon-img icon-green">📬</div>
+      <span class="d-icon-label">Contact</span>
+    </div>
+  </div>
+
+  <!-- ══ WINDOW: About ══ -->
+  <div class="win" id="win-about" style="width:480px; top:50px; left:60px;">
+    <div class="win-titlebar" data-win="win-about">
+      <div class="win-controls">
+        <button class="win-btn win-close"    onclick="closeWin('win-about')"></button>
+        <button class="win-btn win-minimize" onclick="minimizeWin('win-about')"></button>
+        <button class="win-btn win-zoom"     onclick="zoomWin('win-about')"></button>
+      </div>
+      <span class="win-title">About Zac — Finder</span>
+    </div>
+    <div class="win-with-sidebar">
+      <div class="win-sidebar">
+        <div class="sidebar-section">
+          <div class="sidebar-heading">Places</div>
+          <div class="sidebar-item"><span>🏠</span> About</div>
+          <div class="sidebar-item" onclick="openWin('win-exp')"><span>📋</span> Experience</div>
+          <div class="sidebar-item" onclick="openWin('win-ai')"><span>🤖</span> AI Lab</div>
+          <div class="sidebar-item" onclick="openWin('win-contact')"><span>📬</span> Contact</div>
         </div>
       </div>
-      <div class="hero-photo">
-        <img src="zac.jpg" alt="Zac Farnworth" />
+      <div class="win-body">
+        <div class="win-content">
+          <div class="about-header">
+            <img src="zac.jpg" alt="Zac Farnworth" class="about-photo" />
+            <div class="about-info">
+              <h2>Zac Farnworth</h2>
+              <div class="about-title">Senior Implementations PM · Lehi, UT</div>
+              <p>8+ years leading enterprise B2B SaaS implementations end-to-end — from kickoff through full adoption. I turn ambiguous, high-stakes rollouts into smooth, on-time go-lives.</p>
+            </div>
+          </div>
+          <hr class="win-divider" />
+          <div class="about-stats">
+            <div class="about-stat">
+              <div class="about-stat-num">8+</div>
+              <div class="about-stat-label">Years in Enterprise SaaS</div>
+            </div>
+            <div class="about-stat">
+              <div class="about-stat-num">40–50</div>
+              <div class="about-stat-label">Simultaneous Projects</div>
+            </div>
+            <div class="about-stat">
+              <div class="about-stat-num">600%+</div>
+              <div class="about-stat-label">Revenue Growth (Instructure)</div>
+            </div>
+            <div class="about-stat">
+              <div class="about-stat-num">1,500</div>
+              <div class="about-stat-label">Manual Hours Saved / Year</div>
+            </div>
+          </div>
+          <hr class="win-divider" />
+          <p style="font-size:12px; color:#555;">Comfortable with APIs, Python, SQL, and AI tools. I specialize in breaking complex projects into clear milestones, communicating with executive stakeholders, and building scalable playbooks that reduce risk.</p>
+        </div>
       </div>
     </div>
   </div>
 
-  <hr class="divider" />
+  <!-- ══ WINDOW: Implementations ══ -->
+  <div class="win" id="win-exp" style="width:520px; top:80px; left:200px;">
+    <div class="win-titlebar" data-win="win-exp">
+      <div class="win-controls">
+        <button class="win-btn win-close"    onclick="closeWin('win-exp')"></button>
+        <button class="win-btn win-minimize" onclick="minimizeWin('win-exp')"></button>
+        <button class="win-btn win-zoom"     onclick="zoomWin('win-exp')"></button>
+      </div>
+      <span class="win-title">Implementations — Work History</span>
+    </div>
+    <div class="win-toolbar">
+      <span>💼</span>
+      <span class="toolbar-sep"></span>
+      <span>3 positions · 8 years total experience</span>
+    </div>
+    <div class="win-body">
+      <div class="win-content">
 
-  <!-- ── STATS ── -->
-  <section id="stats">
-    <div class="stats-grid">
-      <div class="stat-card fade-in">
-        <div class="stat-num">8<span>+</span></div>
-        <div class="stat-label">Years leading enterprise<br />SaaS implementations</div>
-      </div>
-      <div class="stat-card fade-in">
-        <div class="stat-num">40<span>–50</span></div>
-        <div class="stat-label">Simultaneous enterprise<br />projects managed</div>
-      </div>
-      <div class="stat-card fade-in">
-        <div class="stat-num">600<span>%+</span></div>
-        <div class="stat-label">Revenue growth driven<br />at Instructure</div>
-      </div>
-      <div class="stat-card fade-in">
-        <div class="stat-num">1.5<span>k</span></div>
-        <div class="stat-label">Manual hours eliminated<br />per year via automation</div>
+        <div class="exp-entry">
+          <div class="exp-company-bar">
+            <div class="exp-company-name">Carta</div>
+            <div class="exp-company-date">May 2025 – Present · Sandy, UT</div>
+          </div>
+          <div class="exp-role-title">Senior Implementations Project Manager</div>
+          <ul class="exp-bullets">
+            <li>Lead <b>40–50 simultaneous enterprise implementation projects</b> end-to-end — complex financial data and equity workflows for PE and financial services clients.</li>
+            <li>Design customized plans with clear milestones, <b>proactively resolving risks</b> before they impact go-live.</li>
+            <li>Primary point of contact for <b>CFOs and CEOs</b> throughout the implementation lifecycle.</li>
+            <li>Partner with Sales to scope solutions and ensure smooth handoffs post-implementation.</li>
+            <li>Use <b>AI daily</b> (Claude, Shortcut.ai, Python) to automate manual processes across all 40–50 projects.</li>
+          </ul>
+        </div>
+
+        <hr class="win-divider" />
+
+        <div class="exp-entry">
+          <div class="exp-company-bar">
+            <div class="exp-company-name">Instructure</div>
+            <div class="exp-company-date">May 2018 – Nov 2024 · Salt Lake City, UT</div>
+          </div>
+          <div class="exp-role-title">Technical Implementations Manager — Content Migrations (SaaS)</div>
+          <ul class="exp-bullets">
+            <li>Led <b>30–40 enterprise implementation projects</b> cross-functionally with Sales, Rev-Ops, and Engineering.</li>
+            <li>Drove <b>600%+ revenue growth</b> in the services line — from $300K to over $1.5M annually.</li>
+            <li>Built API-based automations that <b>eliminated 1,000–1,500 manual hours per year</b>.</li>
+          </ul>
+          <div style="margin-top:8px;">
+            <div class="exp-role-title">Software Engineer — Custom Development</div>
+            <ul class="exp-bullets">
+              <li>Built automated workflows and provided technical guidance across the implementation team.</li>
+            </ul>
+          </div>
+          <div style="margin-top:8px;">
+            <div class="exp-role-title">Canvas Customer Support</div>
+            <ul class="exp-bullets">
+              <li>Maintained a <b>perfect CSAT record for 12 consecutive months</b>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <hr class="win-divider" />
+
+        <div class="exp-entry">
+          <div class="exp-company-bar">
+            <div class="exp-company-name">Crest Financial</div>
+            <div class="exp-company-date">Jul 2015 – Jul 2016 · Draper, UT</div>
+          </div>
+          <div class="exp-role-title">Account Manager</div>
+          <ul class="exp-bullets">
+            <li>Managed <b>100+ retail partners</b>, maintaining a <b>98% retention rate</b>.</li>
+            <li>Increased financing volume 15% via data-driven growth strategies.</li>
+          </ul>
+        </div>
+
       </div>
     </div>
-  </section>
+  </div>
 
-  <hr class="divider" />
-
-  <!-- ── EXPERIENCE ── -->
-  <section id="experience">
-    <div class="section-label">Experience</div>
-    <h2 class="section-title">Implementations That Deliver</h2>
-    <p class="section-desc">
-      I've led implementations at scale across equity management, edtech, and financial services —
-      always focused on reducing risk, aligning stakeholders, and hitting go-live on time.
-    </p>
-
-    <div class="exp-list">
-
-      <!-- Carta -->
-      <div class="exp-card featured fade-in">
-        <div class="exp-header">
-          <div class="exp-company">Carta</div>
-          <div class="exp-dates">May 2025 – Present · Sandy, UT</div>
-        </div>
-        <div class="exp-role">Senior Implementations Project Manager</div>
-        <ul class="exp-bullets">
-          <li>
-            Lead <strong>40–50 simultaneous enterprise B2B implementation projects</strong> end-to-end —
-            from kickoff through handoff — managing complex financial data and equity workflows for
-            private equity and financial services clients.
-          </li>
-          <li>
-            Design customized implementation plans with clear milestones and success metrics,
-            <strong>proactively identifying and resolving risks</strong> before they impact go-live.
-          </li>
-          <li>
-            Serve as primary point of contact and trusted advisor, communicating complex technical
-            concepts clearly to <strong>executive stakeholders including CFOs and CEOs</strong>.
-          </li>
-          <li>
-            Partner closely with Sales and cross-functional teams to scope implementation solutions,
-            ensuring smooth handoffs to post-implementation support.
-          </li>
-          <li>
-            Use <strong>AI daily to automate the implementation lifecycle</strong> — from auto-generating
-            kickoff agendas and status updates in Shortcut.ai, to building Python scripts with Claude
-            that parse customer data, flag blockers, and pre-populate project templates. What used to
-            take hours now takes minutes.
-          </li>
-          <li>
-            Built a <strong>Claude-powered workflow</strong> that drafts tailored implementation plans
-            from a customer intake form — eliminating repetitive document creation and freeing up time
-            for high-value customer work.
-          </li>
-        </ul>
+  <!-- ══ WINDOW: AI Lab ══ -->
+  <div class="win" id="win-ai" style="width:460px; top:110px; left:340px;">
+    <div class="win-titlebar" data-win="win-ai">
+      <div class="win-controls">
+        <button class="win-btn win-close"    onclick="closeWin('win-ai')"></button>
+        <button class="win-btn win-minimize" onclick="minimizeWin('win-ai')"></button>
+        <button class="win-btn win-zoom"     onclick="zoomWin('win-ai')"></button>
       </div>
-
-      <!-- Instructure -->
-      <div class="exp-card fade-in">
-        <div class="exp-header">
-          <div class="exp-company">Instructure</div>
-          <div class="exp-dates">May 2018 – Nov 2024 · Salt Lake City, UT</div>
-        </div>
-        <div class="exp-role">Technical Implementations Manager — Content Migrations (SaaS)</div>
-        <ul class="exp-bullets">
-          <li>
-            Led <strong>30–40 simultaneous enterprise customer implementation projects</strong>,
-            working cross-functionally with Sales, Rev-Ops, Engineering, and Support to align
-            solutions with client needs.
-          </li>
-          <li>
-            Drove a <strong>600%+ revenue increase</strong> in the services line — from $300K to over
-            $1.5M annually — by streamlining implementation operations and improving time-to-value.
-          </li>
-          <li>
-            Built process and technical improvements using <strong>APIs and scripting that eliminated
-            1,000–1,500 manual hours per year</strong>, improving scalability across the team.
-          </li>
-          <li>
-            Translated complex technical integrations for non-technical executive stakeholders,
-            building confidence throughout the implementation process.
-          </li>
-        </ul>
-
-        <div class="exp-sub-role">Software Engineer — Custom Development</div>
-        <ul class="exp-bullets">
-          <li>Built automated workflows to replace manual processes, saving 1,000–1,500 hours per year.</li>
-          <li>Provided technical guidance to resolve integration and workflow challenges across the team.</li>
-        </ul>
-
-        <div class="exp-sub-role">Canvas Customer Support</div>
-        <ul class="exp-bullets">
-          <li>Delivered technical support to higher education administrators with fast resolution and clear communication.</li>
-          <li>Maintained a <strong>perfect CSAT record for 12 consecutive months</strong>.</li>
-        </ul>
-      </div>
-
-      <!-- Crest Financial -->
-      <div class="exp-card fade-in">
-        <div class="exp-header">
-          <div class="exp-company">Crest Financial</div>
-          <div class="exp-dates">Jul 2015 – Jul 2016 · Draper, UT</div>
-        </div>
-        <div class="exp-role">Account Manager</div>
-        <ul class="exp-bullets">
-          <li>Managed a portfolio of <strong>100+ retail partners</strong>, supporting operations and identifying growth opportunities.</li>
-          <li>Maintained a <strong>98% client retention rate</strong> and increased financing volume by 15% via data-driven strategies.</li>
-        </ul>
-      </div>
-
+      <span class="win-title">AI Lab — Automation Workflows</span>
     </div>
-  </section>
+    <div class="win-toolbar">
+      <span>🤖</span>
+      <span class="toolbar-sep"></span>
+      <span>AI is how I get more done with less</span>
+    </div>
+    <div class="win-body">
+      <div class="win-content">
+        <p style="font-size:12px; color:#555; margin-bottom:14px;">
+          I don't just manage implementations — I engineer the workflows that make them faster.
+          AI is a core part of how I operate every single day, not a side skill.
+        </p>
 
-  <hr class="divider" />
-
-  <!-- ── SKILLS ── -->
-  <section id="skills">
-    <div class="section-label">Skills</div>
-    <h2 class="section-title">Tools of the Trade</h2>
-    <p class="section-desc">
-      Technical enough to build the automation, experienced enough to lead the room.
-    </p>
-
-    <div class="skills-grid">
-      <div class="skill-group fade-in">
-        <div class="skill-group-title">Implementation & PM</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Enterprise Implementations</span>
-          <span class="skill-tag">Stakeholder Management</span>
-          <span class="skill-tag">Cross-Functional Alignment</span>
-          <span class="skill-tag">Risk Mitigation</span>
-          <span class="skill-tag">Milestone Planning</span>
-          <span class="skill-tag">Go-Live Execution</span>
-          <span class="skill-tag">Playbook Development</span>
+        <div class="ai-card-mac">
+          <h4>⚡ Automated Plan Generation</h4>
+          <p>Built a Claude-powered workflow that reads a customer intake form and auto-generates a fully tailored implementation plan — milestones, success metrics, and risk flags. What used to take 2–3 hours now takes under 5 minutes.</p>
+          <div class="ai-tags-mac">
+            <span class="ai-tag-mac">Claude</span>
+            <span class="ai-tag-mac">Python</span>
+          </div>
         </div>
-      </div>
-      <div class="skill-group fade-in">
-        <div class="skill-group-title">Technical</div>
-        <div class="skill-tags">
-          <span class="skill-tag">APIs</span>
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">SQL</span>
-          <span class="skill-tag">JavaScript</span>
-          <span class="skill-tag">Node.js</span>
-          <span class="skill-tag">Postman</span>
-          <span class="skill-tag">Full Stack (UofU Bootcamp)</span>
+
+        <div class="ai-card-mac">
+          <h4>🔁 Status & Communication Automation</h4>
+          <p>Automated repetitive project communication — weekly status summaries, stakeholder updates, kickoff agendas — using Shortcut.ai and prompt templates. Eliminated hours of manual writing per week across 40–50 active projects.</p>
+          <div class="ai-tags-mac">
+            <span class="ai-tag-mac">Shortcut.ai</span>
+            <span class="ai-tag-mac">Claude</span>
+          </div>
         </div>
-      </div>
-      <div class="skill-group fade-in">
-        <div class="skill-group-title">Tools & Platforms</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Salesforce</span>
-          <span class="skill-tag">Asana</span>
-          <span class="skill-tag">Jira</span>
-          <span class="skill-tag">Claude</span>
-          <span class="skill-tag">Gemini</span>
-          <span class="skill-tag">Google Sheets</span>
-          <span class="skill-tag">Excel</span>
-          <span class="skill-tag">Microsoft 365</span>
+
+        <div class="ai-card-mac">
+          <h4>🛠️ Data & Workflow Scripting</h4>
+          <p>Write Python scripts (with Claude as a coding partner) to parse customer data files, validate formats, flag anomalies, and pre-populate project templates — removing manual data wrangling from the intake process entirely.</p>
+          <div class="ai-tags-mac">
+            <span class="ai-tag-mac">Python</span>
+            <span class="ai-tag-mac">Claude</span>
+            <span class="ai-tag-mac">APIs</span>
+          </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <hr class="divider" />
-
-  <!-- ── AI & AUTOMATION ── -->
-  <section id="ai">
-    <div class="section-label">AI & Automation</div>
-    <h2 class="section-title">Building Smarter, Not Just Harder</h2>
-    <p class="section-desc">
-      I don't just manage implementations — I engineer the workflows that make them faster.
-      AI is now a core part of how I operate, not a side skill.
-    </p>
-
-    <div class="ai-grid">
-      <div class="ai-card fade-in">
-        <span class="ai-card-icon">⚡</span>
-        <div class="ai-card-title">Automated Plan Generation</div>
-        <div class="ai-card-desc">
-          Built a Claude-powered workflow that ingests customer intake forms and auto-generates
-          fully tailored implementation plans — milestones, success metrics, and risk flags included.
-          What used to take 2–3 hours now takes under 5 minutes.
-        </div>
-        <div class="ai-tools">
-          <span class="ai-tool">Claude</span>
-          <span class="ai-tool">Python</span>
-        </div>
+  <!-- ══ WINDOW: Contact ══ -->
+  <div class="win" id="win-contact" style="width:380px; top:140px; left:480px;">
+    <div class="win-titlebar" data-win="win-contact">
+      <div class="win-controls">
+        <button class="win-btn win-close"    onclick="closeWin('win-contact')"></button>
+        <button class="win-btn win-minimize" onclick="minimizeWin('win-contact')"></button>
+        <button class="win-btn win-zoom"     onclick="zoomWin('win-contact')"></button>
       </div>
-      <div class="ai-card fade-in">
-        <span class="ai-card-icon">🔁</span>
-        <div class="ai-card-title">Status & Communication Automation</div>
-        <div class="ai-card-desc">
-          Automated repetitive project communication — weekly status summaries, stakeholder
-          updates, and kickoff agendas — using Shortcut.ai and prompt templates. Eliminated
-          hours of manual writing per week across 40–50 active projects.
+      <span class="win-title">Zac Farnworth — Contact Card</span>
+    </div>
+    <div class="win-body">
+      <div class="win-content">
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
+          <img src="zac.jpg" style="width:56px;height:56px;border-radius:50%;object-fit:cover;border:1px solid #ccc;" />
+          <div>
+            <div style="font-size:16px;font-weight:700;">Zac Farnworth</div>
+            <div style="font-size:11px;color:#888;">Senior Implementations PM</div>
+          </div>
         </div>
-        <div class="ai-tools">
-          <span class="ai-tool">Shortcut.ai</span>
-          <span class="ai-tool">Claude</span>
+        <hr class="win-divider" />
+        <div class="contact-field">
+          <div class="contact-field-icon">✉️</div>
+          <div>
+            <div class="contact-field-label">Email</div>
+            <div class="contact-field-value"><a href="mailto:zacharyfarnworth@gmail.com">zacharyfarnworth@gmail.com</a></div>
+          </div>
         </div>
-      </div>
-      <div class="ai-card fade-in">
-        <span class="ai-card-icon">🛠️</span>
-        <div class="ai-card-title">Data & Workflow Scripting</div>
-        <div class="ai-card-desc">
-          Write Python scripts (with Claude as a coding partner) to parse customer data files,
-          validate formats, flag anomalies, and pre-populate project templates — removing
-          manual data wrangling from the implementation intake process entirely.
+        <div class="contact-field">
+          <div class="contact-field-icon">💼</div>
+          <div>
+            <div class="contact-field-label">LinkedIn</div>
+            <div class="contact-field-value"><a href="https://www.linkedin.com/in/zachary-farnworth-72453315a" target="_blank">zachary-farnworth</a></div>
+          </div>
         </div>
-        <div class="ai-tools">
-          <span class="ai-tool">Python</span>
-          <span class="ai-tool">Claude</span>
-          <span class="ai-tool">APIs</span>
+        <div class="contact-field">
+          <div class="contact-field-icon">📍</div>
+          <div>
+            <div class="contact-field-label">Location</div>
+            <div class="contact-field-value">Lehi, Utah</div>
+          </div>
+        </div>
+        <div class="contact-field">
+          <div class="contact-field-icon">📱</div>
+          <div>
+            <div class="contact-field-label">Phone</div>
+            <div class="contact-field-value"><a href="tel:8019179771">801-917-9771</a></div>
+          </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <hr class="divider" />
-
-  <!-- ── CONTACT ── -->
-  <section id="contact" style="padding-bottom: 100px;">
-    <div class="contact-wrap fade-in">
-      <div class="section-label" style="text-align:center; margin-bottom: 16px;">Contact</div>
-      <h2>Let's work together.</h2>
-      <p>Open to new opportunities in enterprise implementations and SaaS.</p>
-      <div class="contact-links">
-        <a href="mailto:zacharyfarnworth@gmail.com" class="btn-primary">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          zacharyfarnworth@gmail.com
-        </a>
-        <a href="https://www.linkedin.com/in/zachary-farnworth-72453315a" target="_blank" rel="noopener" class="btn-secondary">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2"/></svg>
-          LinkedIn
-        </a>
-      </div>
+  <!-- ── DOCK ── -->
+  <div id="dock">
+    <div class="dock-item" onclick="openWin('win-about')" id="dock-about">
+      <div class="dock-icon icon-blue">🧑‍💼</div>
+      <div class="dock-label">About Zac</div>
+      <div class="dock-dot" id="dot-about"></div>
     </div>
-  </section>
+    <div class="dock-item" onclick="openWin('win-exp')" id="dock-exp">
+      <div class="dock-icon icon-orange">📋</div>
+      <div class="dock-label">Implementations</div>
+      <div class="dock-dot hidden" id="dot-exp"></div>
+    </div>
+    <div class="dock-item" onclick="openWin('win-ai')" id="dock-ai">
+      <div class="dock-icon icon-purple">🤖</div>
+      <div class="dock-label">AI Lab</div>
+      <div class="dock-dot hidden" id="dot-ai"></div>
+    </div>
+    <div class="dock-item" onclick="openWin('win-contact')" id="dock-contact">
+      <div class="dock-icon icon-green">📬</div>
+      <div class="dock-label">Contact</div>
+      <div class="dock-dot hidden" id="dot-contact"></div>
+    </div>
+    <div class="dock-sep"></div>
+    <div class="dock-item">
+      <div class="dock-icon" style="background:linear-gradient(145deg,#aaa,#777);">🗑️</div>
+      <div class="dock-label">Trash</div>
+      <div class="dock-dot hidden"></div>
+    </div>
+  </div>
 
-  <!-- ── FOOTER ── -->
-  <footer>
-    <p>© 2026 Zachary Farnworth &nbsp;·&nbsp; Lehi, UT &nbsp;·&nbsp; 801-917-9771</p>
-  </footer>
+</div><!-- /desktop -->
 
-  <script>
-    // Nav scroll effect
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 20);
-    }, { passive: true });
+<script>
+  /* ── BOOT SEQUENCE ── */
+  const bar = document.getElementById('boot-bar');
+  const bootEl = document.getElementById('boot');
+  const loginEl = document.getElementById('login');
+  const desktopEl = document.getElementById('desktop');
+  let progress = 0;
+  const bootInterval = setInterval(() => {
+    progress += Math.random() * 18 + 4;
+    if (progress >= 100) { progress = 100; clearInterval(bootInterval); }
+    bar.style.width = progress + '%';
+    if (progress >= 100) {
+      setTimeout(() => {
+        bootEl.classList.add('fade-out');
+        setTimeout(() => { bootEl.style.display = 'none'; loginEl.classList.add('visible'); }, 800);
+      }, 400);
+    }
+  }, 120);
 
-    // Intersection observer for fade-ins
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      }),
-      { threshold: 0.12 }
-    );
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-  </script>
+  /* ── LOGIN ── */
+  document.getElementById('login-card').addEventListener('click', () => {
+    loginEl.classList.add('fade-out');
+    setTimeout(() => {
+      loginEl.style.display = 'none';
+      desktopEl.classList.add('visible');
+      openWin('win-about');
+      updateClock();
+    }, 600);
+  });
+
+  /* ── CLOCK ── */
+  function updateClock() {
+    const el = document.getElementById('menubar-clock');
+    const now = new Date();
+    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    let h = now.getHours(), m = now.getMinutes();
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    el.textContent = `${days[now.getDay()]} ${months[now.getMonth()]} ${now.getDate()}  ${h}:${String(m).padStart(2,'0')} ${ampm}`;
+  }
+  setInterval(updateClock, 10000);
+
+  /* ── WINDOW MANAGEMENT ── */
+  let zTop = 10;
+  const openWindows = new Set();
+
+  function openWin(id) {
+    const win = document.getElementById(id);
+    win.classList.add('open');
+    win.classList.remove('minimized');
+    bringToFront(win);
+    openWindows.add(id);
+    const key = id.replace('win-','');
+    const dot = document.getElementById('dot-' + key);
+    if (dot) dot.classList.remove('hidden');
+  }
+
+  function closeWin(id) {
+    const win = document.getElementById(id);
+    win.classList.remove('open');
+    openWindows.delete(id);
+    const key = id.replace('win-','');
+    const dot = document.getElementById('dot-' + key);
+    if (dot) dot.classList.add('hidden');
+  }
+
+  function minimizeWin(id) {
+    closeWin(id);
+    const key = id.replace('win-','');
+    const dot = document.getElementById('dot-' + key);
+    if (dot) dot.classList.remove('hidden'); // keep dot when minimized
+  }
+
+  function zoomWin(id) {
+    const win = document.getElementById(id);
+    if (win.dataset.zoomed === '1') {
+      win.style.width  = win.dataset.pw;
+      win.style.height = win.dataset.ph;
+      win.style.left   = win.dataset.pl;
+      win.style.top    = win.dataset.pt;
+      win.dataset.zoomed = '0';
+    } else {
+      win.dataset.pw = win.style.width  || win.offsetWidth  + 'px';
+      win.dataset.ph = win.style.height || win.offsetHeight + 'px';
+      win.dataset.pl = win.style.left;
+      win.dataset.pt = win.style.top;
+      win.style.width  = (window.innerWidth  - 40) + 'px';
+      win.style.height = (window.innerHeight - 100) + 'px';
+      win.style.left   = '20px';
+      win.style.top    = '26px';
+      win.dataset.zoomed = '1';
+    }
+    bringToFront(win);
+  }
+
+  function bringToFront(win) {
+    // deactivate all
+    document.querySelectorAll('.win').forEach(w => w.classList.add('win-inactive'));
+    win.classList.remove('win-inactive');
+    win.style.zIndex = ++zTop;
+  }
+
+  // Click window to bring to front
+  document.querySelectorAll('.win').forEach(win => {
+    win.addEventListener('mousedown', () => bringToFront(win));
+  });
+
+  /* ── DRAG ── */
+  document.querySelectorAll('.win-titlebar').forEach(bar => {
+    let dragging = false, sx, sy, il, it;
+    const win = bar.closest('.win');
+    bar.addEventListener('mousedown', e => {
+      if (e.target.classList.contains('win-btn')) return;
+      dragging = true;
+      sx = e.clientX; sy = e.clientY;
+      il = win.offsetLeft; it = win.offsetTop;
+      bringToFront(win);
+      e.preventDefault();
+    });
+    document.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      win.style.left = (il + e.clientX - sx) + 'px';
+      win.style.top  = (it + e.clientY - sy) + 'px';
+    });
+    document.addEventListener('mouseup', () => { dragging = false; });
+  });
+
+  /* ── MENU BAR APP NAME: update on focus ── */
+  document.querySelectorAll('.win').forEach(win => {
+    win.addEventListener('mousedown', () => {
+      const title = win.querySelector('.win-title').textContent.split('—')[0].trim();
+      document.querySelector('.menu-item.app-name').textContent = title;
+    });
+  });
+</script>
 </body>
 </html>
